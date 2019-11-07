@@ -18,8 +18,6 @@ package com.vitorsvieira.iso
 
 import com.vitorsvieira.iso.ISOContinent.ISOContinent
 
-import scala.collection.immutable.Seq
-
 /**
  * *
  * ISO 3166-1
@@ -32,12 +30,11 @@ import scala.collection.immutable.Seq
 object ISOCountry extends Enum {
 
   sealed class EnumVal(
-    val value:         String,
+    val value: String,
     val numericalCode: Int,
-    val englishName:   String,
-    val alpha3Code:    String,
-    val continent:     ISOContinent
-  ) extends Value{
+    val englishName: String,
+    val alpha3Code: String,
+    val continent: ISOContinent) extends Value {
     lazy val valueLowerCase: String = this.value.toLowerCase
   }
 
@@ -304,7 +301,7 @@ object ISOCountry extends Enum {
   def apply(countryCode: String): ISOCountry =
     ISOCountry.values.find(countryCode == _.toString) match {
       case Some(country) ⇒ country
-      case _             ⇒ throw new ParseException(s"Invalid alpha-2 code '$countryCode' for ISOCountry")
+      case _ ⇒ throw new ParseException(s"Invalid alpha-2 code '$countryCode' for ISOCountry")
     }
 
   /**
@@ -327,7 +324,7 @@ object ISOCountry extends Enum {
   def apply(numericCode: Int): ISOCountry =
     ISOCountry.values.find(numericCode == _.numericalCode) match {
       case Some(country) ⇒ country
-      case _             ⇒ throw new ParseException(s"Invalid numeric code '$numericCode' for ISOCountry")
+      case _ ⇒ throw new ParseException(s"Invalid numeric code '$numericCode' for ISOCountry")
     }
 
   /**

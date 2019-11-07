@@ -20,7 +20,7 @@ object ISOContinent extends Enum {
 
   sealed class EnumVal(
     val value: String,
-    val name:  String) extends Value
+    val name: String) extends Value
 
   type ISOContinent = EnumVal
 

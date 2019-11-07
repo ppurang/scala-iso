@@ -5,16 +5,20 @@ import sbt._
 // Projects
 // *****************************************************************************
 
+lazy val scala212 = "2.12.10"
+lazy val scala213 = "2.13.1"
+lazy val supportedScalaVersions = List(scala212, scala213)
+
 lazy val `scala-iso` =
   project
-    .in(file("."))
-//    .enablePlugins(AutomateHeaderPlugin, GitVersioning)
+    .in(file(".")).withId("scala-iso")
+    //    .enablePlugins(AutomateHeaderPlugin, GitVersioning)
     .settings(settings)
-//    .settings(publishSettings: _*)
+    //    .settings(crossScalaVersions := List(scala213, scala212))
     .settings(
       libraryDependencies ++= Seq(
         library.scalaCheck % Test,
-        library.scalaTest  % Test
+        library.scalaTest % Test
       )
     )
 
@@ -24,13 +28,15 @@ lazy val `scala-iso` =
 
 lazy val library =
   new {
+
     object Version {
       val scalaCheck = "1.14.2"
-      val scalaTest  = "3.0.8"
+      val scalaTest = "3.0.8"
     }
+
     val scalaCheck = "org.scalacheck" %% "scalacheck" % Version.scalaCheck
-    val scalaTest  = "org.scalatest"  %% "scalatest"  % Version.scalaTest
-}
+    val scalaTest = "org.scalatest" %% "scalatest" % Version.scalaTest
+  }
 
 // *****************************************************************************
 // Settings
@@ -44,49 +50,81 @@ lazy val settings =
 
 lazy val commonSettings =
   Seq(
-    organization := "com.vitorsvieira",
-    scalaVersion := "2.13.1"
-//    crossScalaVersions := Seq("2.11.8", scalaVersion.value),
-//    crossVersion := CrossVersion.binary,
-//    mappings.in(Compile, packageBin) +=
-//      baseDirectory.in(ThisBuild).value / "LICENSE" -> "LICENSE",
-//    scalacOptions ++= Seq(
-//      "-unchecked",
-//      "-deprecation",
-//      "-encoding", "utf8",
-//      "-feature",
-//      "-explaintypes",
-//      "-target:jvm-1.8",
-//      "-language:_",
-//      "-Ydelambdafy:method",
-//      "-Xcheckinit",
-//      "-Xfuture",
-//      "-Xlint",
-//      "-Xlint:-nullary-unit",
-//      "-Ywarn-unused",
-//      "-Ywarn-unused-import",
-//      "-Ywarn-dead-code",
-//      "-Ywarn-value-discard"
-//    ),
-//    javacOptions ++= Seq(
-//      "-source", "1.8",
-//      "-target", "1.8"
-//    ),
-//    unmanagedSourceDirectories.in(Compile) :=
-//      Seq(scalaSource.in(Compile).value),
-//    unmanagedSourceDirectories.in(Test) :=
-//      Seq(scalaSource.in(Test).value),
-//    SbtScalariform.autoImport.scalariformPreferences := SbtScalariform.autoImport.scalariformPreferences.value
-//      .setPreference(AlignSingleLineCaseStatements, true)
-//      .setPreference(AlignSingleLineCaseStatements.MaxArrowIndent, 100)
-//      .setPreference(DoubleIndentClassDeclaration, true)
-//      .setPreference(RewriteArrowSymbols, true)
-//      .setPreference(AlignParameters, true)
-//      .setPreference(AlignArguments, true)
-//      .setPreference(DoubleIndentClassDeclaration, true)
-//      .setPreference(DanglingCloseParenthesis, Preserve),
-//    wartremoverWarnings ++= Warts.unsafe
-)
+    organization := "com.robkler",
+    organizationName := "robkler",
+    startYear := Some(2017),
+    licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt")),
+    version := "0.2.0",
+    scalaVersion := scala213,
+    crossScalaVersions := Seq(scala212, scala213),
+    crossVersion := CrossVersion.binary,
+//    publishMavenStyle := true,
+//    pomIncludeRepository := { _ => false },
+//    releaseCrossBuild := true,
+//    releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+//    publishMavenStyle := true,
+//    publishArtifact in Test := false,
+//    pomExtra := {
+//      <url>https://github.com/vitorsvieira/scala-iso</url>
+//        <licenses>
+//          <license>
+//            <name>Apache 2</name>
+//            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+//          </license>
+//        </licenses>
+//        <scm>
+//          <url>git@github.com:robkler/scala-iso.git</url>
+//          <connection>scm:git:git@github.com:vitorsvieira/scala-iso.git</connection>
+//        </scm>
+//        <developers>
+//          <developer>
+//            <id>robkler</id>
+//            <name>Rob Kler</name>
+//            <url>https://github.com/robkler</url>
+//          </developer>
+//        </developers>
+//    }
+
+    //    mappings.in(Compile, packageBin) +=
+    //      baseDirectory.in(ThisBuild).value / "LICENSE" -> "LICENSE",
+    //    scalacOptions ++= Seq(
+    //      "-unchecked",
+    //      "-deprecation",
+    //      "-encoding", "utf8",
+    //      "-feature",
+    //      "-explaintypes",
+    //      "-target:jvm-1.8",
+    //      "-language:_",
+    //      "-Ydelambdafy:method",
+    //      "-Xcheckinit",
+    ////      "-Xfuture",
+    //      "-Xlint",
+    //      "-Xlint:-nullary-unit",
+    //      "-Ywarn-unused",
+    ////      "-Ywarn-unused-import",
+    //      "-Ywarn-dead-code",
+    //      "-Ywarn-value-discard",
+    //      "-Xfatal-warnings"
+    //    )
+    //    javacOptions ++= Seq(
+    //      "-source", "1.8",
+    //      "-target", "1.8"
+    //    ),
+    //    unmanagedSourceDirectories.in(Compile) :=
+    //      Seq(scalaSource.in(Compile).value),
+    //    unmanagedSourceDirectories.in(Test) :=
+    //      Seq(scalaSource.in(Test).value),
+    //    SbtScalariform.autoImport.scalariformPreferences := SbtScalariform.autoImport.scalariformPreferences.value
+    //      .setPreference(AlignSingleLineCaseStatements, true)
+    //      .setPreference(AlignSingleLineCaseStatements.MaxArrowIndent, 100)
+    //      .setPreference(DoubleIndentClassDeclaration, true)
+    //      .setPreference(RewriteArrowSymbols, true)
+    //      .setPreference(AlignParameters, true)
+    //      .setPreference(AlignArguments, true)
+    //      .setPreference(DoubleIndentClassDeclaration, true)
+    //      .setPreference(DanglingCloseParenthesis, Preserve),
+    //    wartremoverWarnings ++= Warts.unsafe
+  )
 
 //lazy val gitSettings =
 //  Seq(
@@ -94,13 +132,6 @@ lazy val commonSettings =
 //  )
 //
 //
-//lazy val headerSettings =
-//  Seq(
-//    headers := Map(
-//      "scala" -> Apache2_0("2017", "Vitor S. Vieira"),
-//      "conf"  -> Apache2_0("2017", "Vitor S. Vieira", "#")
-//    )
-//  )
 //lazy val dontPublishSettings = Seq(
 //  //publishSigned := (),
 //  publish := (),
@@ -126,33 +157,7 @@ lazy val commonSettings =
 ////  ,
 //
 //  // Release settings
-////  publishMavenStyle := true,
-////  pomIncludeRepository := { _ => false },
-////  releaseCrossBuild             := true,
-////  releasePublishArtifactsAction := PgpKeys.publishSigned.value,
-////  publishMavenStyle             := true,
-////  publishArtifact in Test       := false
-////  ,
-////  pomExtra := {
-////    <url>https://github.com/vitorsvieira/scala-iso</url>
-////      <licenses>
-////        <license>
-////          <name>Apache 2</name>
-////          <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-////        </license>
-////      </licenses>
-////      <scm>
-////        <url>git@github.com:vitorsvieira/scala-iso.git</url>
-////        <connection>scm:git:git@github.com:vitorsvieira/scala-iso.git</connection>
-////      </scm>
-////      <developers>
-////        <developer>
-////          <id>vitorsvieira</id>
-////          <name>Vitor Vieira</name>
-////          <url>http://github.com/vitorsvieira</url>
-////        </developer>
-////      </developers>
-////  }
+
 //  ,
 //
 //  releaseProcess := Seq[ReleaseStep](

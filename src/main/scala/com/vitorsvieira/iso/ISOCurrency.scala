@@ -30,11 +30,10 @@ import com.vitorsvieira.iso.ISOCountry.ISOCountry
  */
 object ISOCurrency extends Enum {
   sealed class EnumVal(
-    val value:         String,
+    val value: String,
     val numericalCode: Int,
-    val minorUnit:     Int,
-    val countries:     ISOCountry*
-  ) extends Value
+    val minorUnit: Int,
+    val countries: ISOCountry*) extends Value
 
   type ISOCurrency = EnumVal
   // format: OFF
@@ -408,7 +407,7 @@ object ISOCurrency extends Enum {
   def apply(currencyCode: String): ISOCurrency =
     ISOCurrency.values.find(currencyCode == _.toString) match {
       case Some(currency) ⇒ currency
-      case _              ⇒ throw new ParseException(s"Invalid currency code '$currencyCode' for ISOCurrency")
+      case _ ⇒ throw new ParseException(s"Invalid currency code '$currencyCode' for ISOCurrency")
     }
 
   /**
@@ -431,7 +430,7 @@ object ISOCurrency extends Enum {
   def apply(country: ISOCountry): ISOCurrency =
     ISOCurrency.values.find(_.countries.contains(country)) match {
       case Some(currency) ⇒ currency
-      case _              ⇒ throw new ParseException(s"Invalid country '$country' for ISOCurrency")
+      case _ ⇒ throw new ParseException(s"Invalid country '$country' for ISOCurrency")
     }
 
   /**
@@ -454,7 +453,7 @@ object ISOCurrency extends Enum {
   def apply(numericalCode: Int): ISOCurrency =
     ISOCurrency.values.find(_.numericalCode == numericalCode) match {
       case Some(currency) ⇒ currency
-      case _              ⇒ throw new ParseException(s"Invalid numeric code '$numericalCode' for ISOCurrency")
+      case _ ⇒ throw new ParseException(s"Invalid numeric code '$numericalCode' for ISOCurrency")
     }
   /**
    * Retrieves Option[ISOCurrency] using numerical code.
