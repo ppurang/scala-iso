@@ -16,6 +16,8 @@
 
 package com.vitorsvieira.iso
 
+import scala.annotation.tailrec
+
 //Slightly adapted from https://gist.github.com/d6y/376f1a4b178c343ff415
 trait Enum {
   //DIY enum type
@@ -27,6 +29,7 @@ trait Enum {
   private val _values = new AtomicReference(Vector[EnumVal]()) //Stores our enum values
 
   //Adds an EnumVal to our storage, uses CCAS to make sure it's thread safe, returns the ordinal
+  @tailrec
   private final def addEnumVal(newVal: EnumVal): Int = {
     import _values.{ compareAndSet, get }
     val oldVec = get
@@ -47,16 +50,16 @@ trait Enum {
     //Enforce that no one mixes in Value in a non-EnumVal type
     final val ordinal = addEnumVal(this) //Adds the EnumVal and returns the ordinal
 
-    def compare(that: Value) = this.ordinal - that.ordinal
+    def compare(that: Value): Int = this.ordinal - that.ordinal
 
     def value: String //All enum values should have a value
 
-    override def toString = value
+    override def toString: String = value
 
     //And that name is used for the toString operation
-    override def equals(other: Any) = this eq other.asInstanceOf[AnyRef]
+    override def equals(other: Any): Boolean = this eq other.asInstanceOf[AnyRef]
 
-    override def hashCode = 31 * (this.getClass.## + value.## + ordinal)
+    override def hashCode: Int = 31 * (this.getClass.## + value.## + ordinal)
   }
 
 }

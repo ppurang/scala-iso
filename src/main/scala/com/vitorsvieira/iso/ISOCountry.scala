@@ -37,7 +37,9 @@ object ISOCountry extends Enum {
     val englishName:   String,
     val alpha3Code:    String,
     val continent:     ISOContinent
-  ) extends Value
+  ) extends Value{
+    lazy val valueLowerCase: String = this.value.toLowerCase
+  }
 
   type ISOCountry = EnumVal
   // format: OFF
