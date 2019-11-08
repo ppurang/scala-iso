@@ -5,9 +5,10 @@ import sbt._
 // Projects
 // *****************************************************************************
 
+lazy val scala211 = "2.11.12"
 lazy val scala212 = "2.12.10"
 lazy val scala213 = "2.13.1"
-lazy val supportedScalaVersions = List(scala212, scala213)
+lazy val supportedScalaVersions = List(scala212, scala213, scala211)
 
 lazy val `scala-iso` =
   project
@@ -56,34 +57,34 @@ lazy val commonSettings =
     licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt")),
     version := "0.2.0",
     scalaVersion := scala213,
-    crossScalaVersions := Seq(scala212, scala213),
+    crossScalaVersions := Seq(scala212, scala213, scala211),
     crossVersion := CrossVersion.binary,
-//    publishMavenStyle := true,
-//    pomIncludeRepository := { _ => false },
-//    releaseCrossBuild := true,
-//    releasePublishArtifactsAction := PgpKeys.publishSigned.value,
-//    publishMavenStyle := true,
-//    publishArtifact in Test := false,
-//    pomExtra := {
-//      <url>https://github.com/vitorsvieira/scala-iso</url>
-//        <licenses>
-//          <license>
-//            <name>Apache 2</name>
-//            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-//          </license>
-//        </licenses>
-//        <scm>
-//          <url>git@github.com:robkler/scala-iso.git</url>
-//          <connection>scm:git:git@github.com:vitorsvieira/scala-iso.git</connection>
-//        </scm>
-//        <developers>
-//          <developer>
-//            <id>robkler</id>
-//            <name>Rob Kler</name>
-//            <url>https://github.com/robkler</url>
-//          </developer>
-//        </developers>
-//    }
+    //    publishMavenStyle := true,
+    //    pomIncludeRepository := { _ => false },
+    //    releaseCrossBuild := true,
+    //    releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+    //    publishMavenStyle := true,
+    //    publishArtifact in Test := false,
+    //    pomExtra := {
+    //      <url>https://github.com/vitorsvieira/scala-iso</url>
+    //        <licenses>
+    //          <license>
+    //            <name>Apache 2</name>
+    //            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    //          </license>
+    //        </licenses>
+    //        <scm>
+    //          <url>git@github.com:robkler/scala-iso.git</url>
+    //          <connection>scm:git:git@github.com:vitorsvieira/scala-iso.git</connection>
+    //        </scm>
+    //        <developers>
+    //          <developer>
+    //            <id>robkler</id>
+    //            <name>Rob Kler</name>
+    //            <url>https://github.com/robkler</url>
+    //          </developer>
+    //        </developers>
+    //    }
 
     //    mappings.in(Compile, packageBin) +=
     //      baseDirectory.in(ThisBuild).value / "LICENSE" -> "LICENSE",
